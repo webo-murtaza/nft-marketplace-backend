@@ -100,9 +100,28 @@ export class ProductsController {
     }
   }
 
+  @ApiOperation({ summary: 'R Read JSON', description: '' })
+  @Get('json/:id')
+  async getProductJson(@Param('id') id: number): Promise<object> {
+    try {
+      let product = await this.productService.getProductById({ id });
+      return {
+        name: product.name,
+        description: product.description,
+        image: product.attachment,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        code: 201,
+        message: error,
+      };
+    }
+  }
+
   @ApiOperation({ summary: 'R Read', description: '' })
   @Get(':id')
-  async getUserById(@Param('id') id: number, @Param('type') type: string): Promise<object> {
+  async getProductById(@Param('id') id: number): Promise<object> {
     try {
       let product = await this.productService.getProductById({ id });
       return {
