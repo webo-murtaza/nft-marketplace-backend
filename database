@@ -1,0 +1,83 @@
+database structure design
+https://dbdiagram.io/d/62877ceef040f104c16651b2
+
+
+- frequencies
+    - primary_key
+    - asset_id
+    - name
+    - description
+
+    - start_date
+    - end_date
+    - schedule_type ( daily, weekly, monthly, adhoc )
+        - adhoc --- anytime between given date range
+        - daily
+            - days multiple selection ( checkboxes )
+        - weekly
+            - days single selection ( select - dropdown / radio )
+        - monthly
+            - months multiple selection ( checkboxes )
+            - display date dropdown ( 1st of every month, 2nd of every month )
+    - specific_date ( default = nullable, value if schedule_type === monthly )
+    - start_time
+    - end_time
+
+    - status ( pending, inspection_created )
+    - created_by
+    - updated_by
+    - deleted_at
+    - created_at
+    - updated_at
+
+- frequency_has_days
+    - primary_key
+    - frequency_id
+    - day ( monday, tuesday, etc... )
+    - created_at
+    - updated_at
+
+- frequency_has_months
+    - primary_key
+    - frequency_id
+    - month ( january, february, etc... )
+    - created_at
+    - updated_at
+
+- inspections
+    - primary_key
+    - frequency_id
+    - inspection_date
+    - start_time
+    - end_time
+    - status ( pending, completed )
+    - created_at
+    - updated_at
+
+
+if(!empty(frequencies) && count(frequencies) > 0){
+    foreach(frequencies as $frequency){
+        case 'adhoc':
+            //
+            break;
+        case 'daily':
+            //
+            break;
+        case 'weekly':
+            //
+            break;
+        case 'monthly':
+            //
+            break;
+    }
+}
+
+CRON JOB
+- frequencies, frequency_has_days, frequency_has_months
+
+- frequencies --- create --- pending
+    - frequencies table will be updated ( inspection_created )
+
+- frequencies --- update --- pending
+    - frequencies table will be updated ( pending )
+    - inspections --- remove all the entries with frequency_id
