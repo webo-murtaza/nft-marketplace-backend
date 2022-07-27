@@ -104,7 +104,7 @@ export class ProductsController {
   @Get('json/:id')
   async getProductJson(@Param('id') id: number): Promise<object> {
     try {
-      let product = await this.productService.getProductById({ id });
+      let product = await this.productService.getProductById({ 'token_id': id });
       return {
         name: product.name,
         description: product.description,
