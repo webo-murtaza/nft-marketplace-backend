@@ -31,6 +31,6 @@ export class ProductsService {
   }
 
   async updateProductById(id, payload) {
-    await this.productRepository.createQueryBuilder('products').update().set(payload).where('id=:id', { id }).execute();
+    await this.productRepository.createQueryBuilder('products').update().set(payload).where('token_id=:id', { id }).execute();
   }
 }
