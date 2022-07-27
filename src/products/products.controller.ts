@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -131,6 +131,28 @@ export class ProductsController {
         data: {
           product,
         },
+      };
+    } catch (error) {
+      return {
+        success: false,
+        code: 201,
+        message: error,
+      };
+    }
+  }
+
+  @ApiOperation({ summary: 'U Update', description: '' })
+  @Patch(':id')
+  async update(
+    @Param('id') id: number,
+    @Body() payload: any,
+  ) {
+    try {
+      await this.productService.updateProductById(id, payload);
+      return {
+        success: true,
+        code: 200,
+        message: 'Product has been updated.',
       };
     } catch (error) {
       return {

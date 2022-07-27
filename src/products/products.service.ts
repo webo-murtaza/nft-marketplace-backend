@@ -29,4 +29,8 @@ export class ProductsService {
   async getProductById(query: FindConditions<ProductEntity>) {
     return await this.productRepository.findOneOrFail(query);
   }
+
+  async updateProductById(id, payload) {
+    await this.productRepository.createQueryBuilder('products').update().set(payload).where('id=:id', { id }).execute();
+  }
 }

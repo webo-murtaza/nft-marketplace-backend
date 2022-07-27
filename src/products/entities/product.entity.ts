@@ -17,6 +17,15 @@ export class ProductEntity extends BaseEntity {
   @Column({ nullable: true })
   attachment: string;
 
+  @Column({ nullable: true })
+  block_number: string;
+
+  @Column({ nullable: true })
+  transaction_hash: string;
+
+  @Column({ nullable: true })
+  token_id: number;
+
   @CreateDateColumn()
   created_at: Date;
 }
